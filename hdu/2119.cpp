@@ -1,5 +1,5 @@
 //http://acm.hdu.edu.cn/showproblem.php?pid=2119
-
+/*least vertex cover*/
 #include <cstdio>
 #include <cstring>
 #define RANGE 100
