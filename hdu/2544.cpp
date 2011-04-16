@@ -2,41 +2,65 @@
 /*shortest path, dijkstra.*/
 #include<cstdio>
 #include<cstring>
+#include<vector>
+#include<queue>
+using namespace std;
 #define N 101
 #define M 10000
 #define INF 0x7f7f7f7f
 int graph[N][N],visited[N],dist[N];
 int n,m;
 
-
-void Dijkstra()
+struct Node
 {
-	memset(visited,0,sizeof(visited));
-	dist[1] = 0;
-	visited[1] = 1;
-	for(int i = 2;i<=n;++i)
-		dist[i] = graph[1][i];
-	
-	int added = 1;
-	while(added < n)
+	Node(int _n,int _l):n(_n),l(_l){}
+	int n,l;
+	bool operator < (const Node& rightValue) const
 	{
-		int length = INF;
-		int node = -1;
-		for(int j = 1;j<=n;++j)
-		{
-			if(!visited[j]&&dist[j]<length)
-			{
-				node = j;
-				length = dist[j];
-			}
-		}
+		return this->l > rightValue.l; 
+	}
+};
 
-		visited[node] = 1;
-		added++;
-		for(int j = 1;j<=n;++j)
+
+void Dijkstra(int start)
+{
+	priority_queue<Node> heap;
+	memset(dist,INF,sizeof(dist));
+	memset(visited,0,sizeof(visited));
+	dist[start] = 0;
+	visited[start] = 1;
+	int visit = 1;
+	for(int i = 1;i<=n;++i)
+	{
+		graph[i][i] = 0;
+		if(i!=start&&graph[start][i]!=INF)
 		{
-			if(!visited[j]&&dist[node]+graph[node][j]<dist[j])
-				dist[j] = dist[node] + graph[node][j];
+			Node node(i,graph[start][i]);
+			heap.push(node);
+		}
+	}
+
+	while(visit<n)
+	{
+		Node node(0,0);
+		if(!heap.empty())
+			node = heap.top();
+		heap.pop();
+		
+		if(visited[node.n])
+			continue;
+		visited[node.n] = 1;
+		dist[node.n] = node.l;
+		visit++;
+
+		for(int i = 1;i<=n;++i)
+		{
+			if(!visited[i]&&dist[i]>graph[node.n][i]+dist[node.n])
+			{
+				dist[i] = graph[node.n][i] + dist[node.n];
+				Node NewNode(i,dist[i]);
+				heap.push(NewNode);
+			}
 		}
 	}
 }
@@ -56,7 +80,7 @@ int main()
 			graph[b][a] = c;
 		}
 
-		Dijkstra();
+		Dijkstra(1);
 		printf("%d\n",dist[n]);
 	}
 	return 0;
