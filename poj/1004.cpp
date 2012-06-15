@@ -1,3 +1,5 @@
+/*easy problem*/
+
 #include <iostream>
 using namespace std;
 
