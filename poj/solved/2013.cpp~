@@ -1,7 +1,3 @@
-/*
-	simulation
-*/
-
 #include<cstdio>
 #include<cstring>
 

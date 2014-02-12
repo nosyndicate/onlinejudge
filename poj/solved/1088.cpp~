@@ -1,9 +1,3 @@
-/*
-	search
-	dynamic programming
-	memorization
-*/
-
 #include<cstdio>
 using namespace std;
 
