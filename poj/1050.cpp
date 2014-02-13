@@ -4,6 +4,9 @@
 
 int num[MAX][MAX];
 
+
+
+
 int main()
 {
     int n;
